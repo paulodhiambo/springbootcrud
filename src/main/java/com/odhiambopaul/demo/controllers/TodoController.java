@@ -37,11 +37,10 @@ public class TodoController {
         return new ResponseEntity<>(todo1, httpHeaders, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<Todo> updateTodo(@RequestBody Todo todo) {
-        todoService.updateTodo(todo);
-        Todo updatedTodo = todoService.getTodoById(todo.getId());
-        return new ResponseEntity<>(updatedTodo, HttpStatus.NO_CONTENT);
+    @PutMapping({"/{todoId}"})
+    public ResponseEntity<Todo> updateTodo(@PathVariable("todoId") Long todoId, @RequestBody Todo todo) {
+        todoService.updateTodo(todoId, todo);
+        return new ResponseEntity<>(todoService.getTodoById(todoId), HttpStatus.OK);
     }
 
     @DeleteMapping({"/{todoId}"})
